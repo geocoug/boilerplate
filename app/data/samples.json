@@ -1,0 +1,20 @@
+[
+    {
+        "study": "Demo",
+        "sample_id": "SED-001",
+        "sample_no": "SED-001",
+        "sample_type": "N",
+        "matrix": "Sediment",
+        "description": "Grab sample from a test pit",
+        "sample_date": "2023-01-01"
+    },
+    {
+        "study": "Demo",
+        "sample_id": "SED-002",
+        "sample_no": "SED-002",
+        "sample_type": "N",
+        "matrix": "Sediment",
+        "description": "Grab sample from a test pit",
+        "sample_date": "2023-01-01"
+    }
+]

@@ -1,0 +1,14 @@
+---
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Bind mount the working directory during development
+    # volumes:
+    #   - type: bind
+    #     source: ./app
+    #     target: /usr/local/app
+    command: python ./app/main.py
