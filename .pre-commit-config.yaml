@@ -64,7 +64,7 @@ repos:
     rev: v0.0.224
     hooks:
       - id: ruff
-        args: ["--force-exclude"]
+        args: [--config=./.github/linters/ruff.toml, --fix]
   # Security linter
   - repo: https://github.com/PyCQA/bandit
     rev: 1.7.4
