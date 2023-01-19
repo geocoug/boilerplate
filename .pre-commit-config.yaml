@@ -48,26 +48,15 @@ repos:
     hooks:
       - id: mypy
         args: [--install-types, --non-interactive, --ignore-missing-imports]
-  # Format Python docstrings
-  - repo: https://github.com/DanielNoord/pydocstringformatter
-    rev: v0.7.3
-    hooks:
-      - id: pydocstringformatter
   # Opinionated code styling
   - repo: https://github.com/psf/black
     rev: 22.12.0
     hooks:
       - id: black
   # PEP 8 style guide, error and complexity checks
-  # Replaces Flake8, isort, pydocstyle, yesqa, eradicate, pyupgrade, and autoflake
+  # Replaces Flake8, isort, pydocstyle, pyupgrade, bandit, and autoflake
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: v0.0.224
     hooks:
       - id: ruff
         args: [--config=./.github/linters/ruff.toml, --fix]
-  # Security linter
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.4
-    hooks:
-      - id: bandit
-        args: [--skip=B101]
