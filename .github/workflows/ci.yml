@@ -56,7 +56,7 @@ jobs:
         run: |
           python -m pytest -v
 
-  # Pre-commit hooks
+  # Pre-commit hooks - for use in private repos.
   # pre-commit:
   #   runs-on: ubuntu-latest
   #   steps:
