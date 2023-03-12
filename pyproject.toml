@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "boilerplate"
+version = "0.0.1"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["fastapi>=0.88.0", "uvicorn>=0.20.0"]
+
+[project.optional-dependencies]
+dev = [
+  "black>=22.10.0",
+  "pytest>=7.2.0",
+  "pytest-cov>=4.0.0",
+  "ruff>=0.0.219",
+  "httpx>=0.23.3",
+]
+
+[tool.ruff]
+select = ["E", "F", "Q", "B", "I", "D", "UP", "N", "ANN", "S", "C4", "T20", "RET", "SIM", "PD", "RUF"]
+ignore = ["D100", "D104", "D203", "D213", "D400", "S101"]
+line-length = 88
+fixable = ["I"]
+exclude = [".env", ".venv", "venv", "notebooks"]
+show-source = true
+
+[tool.pytest.ini_options]
+addopts = "--cov=src --cov-report term-missing --cov-fail-under 80"
+pythonpath = [
+  "src"
+]
+
+[tool.black]
+line-length = 88
+extend-exclude = '''
+/(
+  | .env
+  | .venv
+  | venv
+  | notebooks
+)/
+'''

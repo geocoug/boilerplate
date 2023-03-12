@@ -3,9 +3,9 @@ name: ci
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
-    branches: [main]
+    branches: [main, dev]
   workflow_dispatch:
 
 jobs:
@@ -35,12 +35,12 @@ jobs:
       - name: Build the Docker stack
         run: docker compose up --build
 
-  # Python unit tests
+  # Python checks
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.10", "3.11"]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
@@ -48,13 +48,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install ruff pytest
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        run: make update
       - name: Test with pytest
-        run: |
-          python -m pytest -v
+        run: make test
 
   # Pre-commit hooks - for use in private repos.
   # pre-commit:

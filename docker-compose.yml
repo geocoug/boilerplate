@@ -1,14 +1,28 @@
 ---
-version: "3.9"
+version: "3.8"
 
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    # Bind mount the working directory during development
-    # volumes:
-    #   - type: bind
-    #     source: ./app
-    #     target: /usr/local/app
-    command: python ./app/main.py
+
+  caddy:
+    container_name: caddy
+    image: caddy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    restart: always
+
+  api:
+    build: .
+    volumes:
+      - .:/usr/local/app
+    depends_on:
+      - caddy
+    restart: always
+
+volumes:
+  caddy_data:
+  caddy_config:

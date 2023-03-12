@@ -44,3 +44,5 @@ COPY . $HOME
 RUN chown -R app:app $HOME
 
 USER app
+
+CMD ["uvicorn", "src.api.api:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
