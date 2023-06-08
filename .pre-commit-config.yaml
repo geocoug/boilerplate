@@ -32,10 +32,12 @@ repos:
         args: [--config, ./.github/linters/.sqlfluff]
   # Markdown lint
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.33.0
+    rev: v0.34.0
     hooks:
       - id: markdownlint
-        args: [--config, .github/linters/.markdownlint.yml]
+        args: [-c, .github/linters/.markdownlint.yml]
+        types: [file]
+        files: .(md|qmd)$
   # Add trailing commas to calls and literals.
   - repo: https://github.com/asottile/add-trailing-comma
     rev: v2.4.0
