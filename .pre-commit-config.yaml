@@ -32,7 +32,7 @@ repos:
         args: [--config, ./.github/linters/.sqlfluff]
   # Markdown lint
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.34.0
+    rev: v0.35.0
     hooks:
       - id: markdownlint
         args: [-c, .github/linters/.markdownlint.yml]
