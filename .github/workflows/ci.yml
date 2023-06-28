@@ -1,78 +1,34 @@
 ---
-name: ci
+name: ci/cd
 
 on:
   push:
-    branches: [main, dev]
   pull_request:
-    branches: [main, dev]
   workflow_dispatch:
 
 jobs:
-  # Dockerfile linter
-  dockerfile-hadolint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: Dockerfile
-          config: ./.github/linters/.hadolint.yaml
+  python-checks:
+    name: Python Checks
+    uses: geocoug/github-actions-templates/.github/workflows/python-checks.yaml@main
+    permissions:
+      contents: read
+    with:
+      pytest: true
 
-  # Dockerfile build check
-  dockerfile-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build the Docker image
-        run: docker build --no-cache -t test-image -f Dockerfile .
-
-  # Docker compose build check
-  docker-compose-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build the Docker stack
-        run: docker compose up --build -d
-
-  # Python tests
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.10", "3.11"]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: make update
-      - name: Test with pytest
-        run: make test
-
-  devcontainer:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Pre-build dev container image
-        uses: devcontainers/ci@v0.3
-        with:
-          imageName: ghcr.io/${{ github.repository }}/devcontainer
-          cacheFrom: ghcr.io/${{ github.repository }}/devcontainer
-          push: always
-
-  # Pre-commit hooks - for use in private repos.
-  # pre-commit:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-python@v3
-  #     - uses: pre-commit/action@v3.0.0
+  docker-build:
+    name: Docker Build+Push
+    uses: geocoug/github-actions-templates/.github/workflows/docker-build.yaml@main
+    permissions:
+      contents: read
+      packages: write
+      pull-requests: write
+    with:
+      ghcr-enable: true
+      image-names: |
+        ghcr.io/${{ github.repository }}
+      tag-rules: |
+        type=raw,value=latest,enable=${{ endsWith(github.ref, github.event.repository.default_branch) }}
+        type=ref,event=pr
+        type=ref,event=branch
+        type=semver,pattern={{version}}
+        type=raw,value=gha-${{ github.run_id }}
