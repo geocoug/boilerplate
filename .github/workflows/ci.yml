@@ -9,7 +9,7 @@ on:
 jobs:
   python-checks:
     name: Python Checks
-    uses: geocoug/github-actions-templates/.github/workflows/python-checks.yaml@main
+    uses: geocoug/github-actions-templates/.github/workflows/python-checks.yml@main
     permissions:
       contents: read
     with:
@@ -17,7 +17,7 @@ jobs:
 
   docker-build:
     name: Docker Build+Push
-    uses: geocoug/github-actions-templates/.github/workflows/docker-build.yaml@main
+    uses: geocoug/github-actions-templates/.github/workflows/docker-build.yml@main
     permissions:
       contents: read
       packages: write
