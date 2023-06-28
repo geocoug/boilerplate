@@ -1,6 +1,6 @@
 # Boilerplate
 
-[![ci](https://github.com/geocoug/boilerplate/actions/workflows/ci.yml/badge.svg)](https://github.com/geocoug/boilerplate/actions/workflows/ci.yml)
+[![ci/cd](https://github.com/geocoug/boilerplate/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/geocoug/boilerplate/actions/workflows/ci-cd.yml)
 [![pre-commit.ci](https://results.pre-commit.ci/badge/github/geocoug/boilerplate/main.svg)](https://results.pre-commit.ci/latest/github/geocoug/boilerplate/main)
 ![license](https://img.shields.io/github/license/geocoug/boilerplate)
 
