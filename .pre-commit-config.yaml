@@ -47,18 +47,18 @@ repos:
     rev: v2.5.1
     hooks:
       - id: add-trailing-comma
-  # Opinionated code styling
-  - repo: https://github.com/psf/black
-    rev: 23.3.0
-    hooks:
-      - id: black
   # PEP 8 style guide, error and complexity checks
-  # Replaces Flake8, isort, pydocstyle, pyupgrade, bandit, and autoflake
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.272
+  # Replaces Black, Flake8, isort, pydocstyle, pyupgrade, bandit, and autoflake
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.1.3
     hooks:
+      # Run the Ruff linter.
       - id: ruff
-        args: [--config=./.github/linters/ruff.toml]
+        args: [--config=./.github/linters/.ruff.toml]
+      # Run the Ruff formatter.
+      - id: ruff-format
+        args: [--config=./.github/linters/.ruff.toml]
   # Local hooks only
   - repo: local
     hooks:

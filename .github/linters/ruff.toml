@@ -8,14 +8,29 @@ fix = false
 line-length = 88
 # A path to the cache directory
 cache-dir = ".ruff_cache"
-# The style in which violation messages should be formatted
-format = "grouped"
 # Whether to automatically exclude files that are ignored by .ignore, .gitignore, .git/info/exclude, and global gitignore files.
 respect-gitignore = true
 # A list of rule codes or prefixes to enable.
 # Prefixes can specify exact rules (like F841), entire categories (like F), or anything in between.
 # Default = Pyflakes `E` and `F` codes.
-select = ["E", "F", "Q", "B", "I", "D", "UP", "N", "ANN", "S", "C4", "T20", "RET", "SIM", "PD", "RUF"]
+select = [
+    "E",
+    "F",
+    "Q",
+    "B",
+    "I",
+    "D",
+    "UP",
+    "N",
+    "ANN",
+    "S",
+    "C4",
+    "T20",
+    "RET",
+    "SIM",
+    "PD",
+    "RUF",
+]
 ignore = ["D100", "D104", "D203", "D213", "D400", "S101"]
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
@@ -48,3 +63,12 @@ per-file-ignores = {}
 [mccabe]
 # Unlike Flake8, default to a complexity level of 10.
 max-complexity = 10
+[format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
