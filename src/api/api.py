@@ -24,6 +24,7 @@ async def root() -> RedirectResponse:
     Returns
     -------
         RedirectResponse: Redirect to API documentation.
+
     """
     return RedirectResponse("/docs")
 
@@ -35,5 +36,6 @@ async def hello() -> str:
     Returns
     -------
         str: String response.
+
     """
     return "Hello World!"

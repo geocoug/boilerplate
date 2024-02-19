@@ -43,5 +43,5 @@ lint: $(VENV)/bin/activate ## Run pre-commit hooks
 	$(PYTHON) -m pre_commit install --install-hooks
 	$(PYTHON) -m pre_commit run --all-files
 
-build: $(VENV)/bin/activate ## Generate distrubition packages
+build: $(VENV)/bin/activate ## Generate distribution packages
 	$(PYTHON) -m build

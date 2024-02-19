@@ -13,6 +13,7 @@ class TestAPI:
         Args:
         ----
             self (TestAPI): Base API test class.
+
         """
         response = client.get("/")
         assert response.status_code == 200
@@ -23,6 +24,7 @@ class TestAPI:
         Args:
         ----
             self (TestAPI): Base API test class.
+
         """
         response = client.get("/hello")
         assert response.status_code == 200
