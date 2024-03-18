@@ -6,7 +6,7 @@
 fix = false
 
 # The line length to use when enforcing long-lines violations (like E501).
-line-length = 88
+line-length = 120
 indent-width = 4
 
 # A path to the cache directory
