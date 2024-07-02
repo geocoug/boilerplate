@@ -16,6 +16,7 @@ httpx==0.23.3
 identify==2.5.20
 idna==3.4
 iniconfig==2.0.0
+mypy==1.10.1
 mypy-extensions==1.0.0
 nodeenv==1.7.0
 packaging==23.0

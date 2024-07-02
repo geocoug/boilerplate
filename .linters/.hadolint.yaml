@@ -11,4 +11,3 @@ ignored:
   - DL3028 #gem install pin versions
   - DL3059 #multiple consecutive runs
   - DL4006 #we don't need pipefail in this
-  - SC2016 #we want single quotes sometimes
