@@ -1,6 +1,6 @@
 # Boilerplate
 
-[![ci/cd](https://github.com/geocoug/boilerplate/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/geocoug/boilerplate/actions/workflows/ci-cd.yml)
+[![ci/cd](https://github.com/geocoug/boilerplate/actions/workflows/ci-cd.yaml/badge.svg)](https://github.com/geocoug/boilerplate/actions/workflows/ci-cd.yaml)
 
 Generalized starter template for developing Python applications.
 
@@ -74,3 +74,19 @@ The project is containerized using [Docker](https://www.docker.com/). The[`Docke
 ### Publishing
 
 The project can be published to [PyPI](https://pypi.org/) using the [`twine`](https://twine.readthedocs.io/) package. To publish the package, run the command `make publish`.
+
+## Requirements
+
+The following Python packages are required for this project:
+
+- `mkdocs`
+- `mkdocs-material`
+- `mkdocstrings`
+- `mkdocstrings[python]`
+- `markdown-include`
+- `pytest`
+- `pytest-cov`
+- `bump-my-version`
+- `ruff`
+- `pre-commit`
+- `twine`
