@@ -19,7 +19,7 @@ repos:
       - id: gitleaks
   # Spell check
   - repo: https://github.com/crate-ci/typos
-    rev: v1.22.9
+    rev: v1.23.6
     hooks:
       - id: typos
   # Supported base hooks
@@ -29,7 +29,6 @@ repos:
       - id: check-added-large-files
       - id: check-ast
       - id: check-case-conflict
-      - id: check-json
       - id: check-yaml
       - id: end-of-file-fixer
       - id: mixed-line-ending
@@ -40,25 +39,18 @@ repos:
     rev: v2.13.0-beta
     hooks:
       - id: hadolint
-        args: [--config, ./.linters/.hadolint.yaml]
-  # YAML linter
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.35.1
-    hooks:
-      - id: yamllint
-        args: [--config-file, ./.linters/.yaml-lint.yml]
-  # SQL linter
-  - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 3.0.7
-    hooks:
-      - id: sqlfluff-lint
-        args: [--config, ./.linters/.sqlfluff]
+  # # SQL linter
+  # - repo: https://github.com/sqlfluff/sqlfluff
+  #   rev: 3.1.0
+  #   hooks:
+  #     - id: sqlfluff-lint
+  #       args: [--dialect, postgres]
   # Markdown lint
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.41.0
     hooks:
       - id: markdownlint
-        args: [-c, ./.linters/.markdownlint.yml]
+        args: [--disable, MD013]
         types: [file]
         files: .(md|qmd)$
   # Add trailing commas to calls and literals.
@@ -66,21 +58,20 @@ repos:
     rev: v3.1.0
     hooks:
       - id: add-trailing-comma
-  # PEP 8 style guide, error and complexity checks
-  # Replaces Black, Flake8, isort, pydocstyle, pyupgrade, bandit, and autoflake
+  # Lint and format Python files
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.5.0
+    rev: v0.5.5
     hooks:
       # Run the Ruff linter.
       - id: ruff
-        args: [--config=./.linters/.ruff.toml, --fix, --exit-non-zero-on-fix]
+        args: [--config=pyproject.toml]
       # Run the Ruff formatter.
       - id: ruff-format
-        args: [--config=./.linters/.ruff.toml]
+        args: [--config=pyproject.toml]
   # Mypy static type checker
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.10.1
+    rev: v1.11.1
     hooks:
     -   id: mypy
   # Local hooks only
@@ -91,8 +82,8 @@ repos:
       - id: pytest
         name: pytest
         language: python
-        additional_dependencies: [pytest, pytest-cov, coverage, fastapi, httpx]
-        entry: pytest -sv
+        additional_dependencies: [pytest, pytest-cov, fastapi, httpx]  # coverage
+        entry: pytest -sv --cov=boilerplate
         require_serial: true
         pass_filenames: false
         files: \.py$

@@ -7,7 +7,7 @@
 }
 
 http:// {
-	reverse_proxy fastapi:8000
+	reverse_proxy api:8000
 	header {
 		# disable clients from sniffing the media type
 		X-Content-Type-Options nosniff

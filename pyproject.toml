@@ -1,44 +1,115 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [project]
 name = "boilerplate"
-version = "0.0.1"
-readme = "README.md"
+dynamic = ["version"]
+authors = [{ name = "Caleb Grant", email = "grantcaleb22@gmail.com" }]
+description = "A simple boilerplate module."
+readme = { file = "README.md", content-type = "text/markdown" }
+license = { file = "LICENSE" }
 requires-python = ">=3.10"
-dependencies = ["fastapi>=0.88.0", "uvicorn>=0.20.0"]
-
-[project.optional-dependencies]
-dev = [
-  "black>=22.10.0",
-  "pytest>=7.2.0",
-  "pytest-cov>=4.0.0",
-  "ruff>=0.0.219",
-  "httpx>=0.23.3",
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
 ]
+dependencies = []
+keywords = ["boilerplate"]
 
-[tool.ruff]
-select = ["E", "F", "Q", "B", "I", "D", "UP", "N", "ANN", "S", "C4", "T20", "RET", "SIM", "PD", "RUF"]
-ignore = ["D100", "D104", "D203", "D213", "D400", "S101"]
-line-length = 88
-fixable = ["I"]
-exclude = [".env", ".venv", "venv", "notebooks"]
-show-source = true
+[project.scripts]
+boilerplate = "boilerplate.boilerplate:cli"
+
+[tool.setuptools.dynamic]
+version = { attr = "boilerplate._version.__version__" }
+
+[project.urls]
+Homepage = "https://boilerplate.readthedocs.io"
+Repository = "https://github.com/geocoug/boilerplate"
+Issues = "https://github.com/geocoug/boilerplate/issues"
 
 [tool.pytest.ini_options]
-addopts = "--cov=src --cov-report term-missing --cov-fail-under 80"
-pythonpath = [
-  "src"
-]
+addopts = ["--cov=boilerplate", "-s", "-v"]
+testpaths = ["tests"]
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s - %(name)s - %(levelname)s: %(message)s"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
 
-[tool.black]
-line-length = 88
-extend-exclude = '''
-/(
-  | .env
-  | .venv
-  | venv
-  | notebooks
-)/
-'''
+[tool.ruff]
+# Exclude a variety of commonly ignored directories.
+exclude = [
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".hg",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "node_modules",
+  "venv",
+  "*cache*",
+]
+# The line length to use when enforcing long-lines violations (like E501).
+line-length = 120
+# Assume Python 3.11.
+target-version = "py312"
+# Whether to automatically exclude files that are ignored by .ignore, .gitignore, .git/info/exclude, and global gitignore files.
+respect-gitignore = true
+# Default autofix behavior
+fix = false
+
+[tool.ruff.lint]
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+# A list of rule codes or prefixes to enable.
+# Prefixes can specify exact rules (like F841), entire categories (like F), or anything in between.
+# Default = Pyflakes `E` and `F` codes.
+select = [
+  "E",
+  "F",
+  "Q",
+  "B",
+  "I",
+  "UP",
+  "N",
+  "S",
+  "C4",
+  "T20",
+  "RET",
+  "SIM",
+  "PD",
+  "RUF",
+]
+ignore = ["S101"]
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+[tool.bumpversion]
+current_version = "0.0.1"
+commit = true
+commit_args = "--no-verify"
+tag = true
+
+[[tool.bumpversion.files]]
+filename = "boilerplate/_version.py"

@@ -1,8 +1,5 @@
 ---
-version: "3.8"
-
 services:
-
   caddy:
     container_name: caddy
     image: caddy:latest
@@ -16,7 +13,21 @@ services:
     restart: always
 
   api:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint:
+      [
+        "python",
+        "-m",
+        "uvicorn",
+        "boilerplate.api:app",
+        "--reload",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+      ]
     volumes:
       - .:/usr/local/app
     depends_on:

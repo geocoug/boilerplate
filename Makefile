@@ -1,6 +1,6 @@
 VENV = .venv
-PYTHON = $(VENV)/bin/python
-PIP = $(VENV)/bin/pip
+BIN = $(VENV)/bin
+PYTHON = $(BIN)/python
 TEST = pytest
 
 # Self documenting commands
@@ -12,36 +12,90 @@ help: ## show this help
 	| column -t -s '|'
 
 $(VENV)/bin/activate: requirements.txt
-	python3 -m venv .venv
-	$(PIP) install -U pip
-	$(PIP) install -r requirements.txt
+	uv venv
+	uv pip install -U pip
+	uv pip install -r requirements.txt
 
-run: ## Run the app
-	docker compose up
+init: ## Initialize the project environment (venv & pre-commit)
+	@$(MAKE) $(BIN)/activate
+	@$(MAKE) update
 
 clean: ## Remove temporary files
-	rm -rf .ipynb_checkpoints
-	rm -rf **/.ipynb_checkpoints
-	rm -rf __pycache__
-	rm -rf **/__pycache__
-	rm -rf **/**/__pycache__
-	rm -rf .pytest_cache
-	rm -rf **/.pytest_cache
-	rm -rf .ruff_cache
-	rm -rf .coverage
-	rm -rf build
-	rm -rf dist
+	@rm -rf .ipynb_checkpoints
+	@rm -rf **/.ipynb_checkpoints
+	@rm -rf __pycache__
+	@rm -rf **/__pycache__
+	@rm -rf **/**/__pycache__
+	@rm -rf .pytest_cache
+	@rm -rf **/.pytest_cache
+	@rm -rf .ruff_cache
+	@rm -rf .coverage
+	@rm -rf build
+	@rm -rf dist
+	@rm -rf *.egg-info
+	@rm -rf site/
+	@rm -rf .mypy_cache
 
-update: $(VENV)/bin/activate ## Update pip and pre-commit
-	$(PIP) install -U pip
+bump: ## Show the next version
+	@bump-my-version show-bump
+
+bump-patch: $(VENV)/bin/activate ## Bump patch version
+	@printf "Applying patch bump\n"
+	@$(BIN)/bump-my-version bump patch
+	@$(MAKE) bump
+
+bump-minor: $(VENV)/bin/activate ## Bump minor version
+	@printf "Applying minor bump\n"
+	@$(BIN)/bump-my-version bump minor
+	@$(MAKE) bump
+
+bump-major: $(VENV)/bin/activate ## Bump major version
+	@printf "Applying major bump\n"
+	@$(BIN)/bump-my-version bump major
+	@$(MAKE) bump
+
+update: $(VENV)/bin/activate ## Update pre-commit
+	$(PYTHON) -m pre_commit install --install-hooks
 	$(PYTHON) -m pre_commit autoupdate
-
-test: $(VENV)/bin/activate ## Run unit tests
-	$(PYTHON) -m $(TEST) -v tests/
 
 lint: $(VENV)/bin/activate ## Run pre-commit hooks
 	$(PYTHON) -m pre_commit install --install-hooks
 	$(PYTHON) -m pre_commit run --all-files
 
-build: $(VENV)/bin/activate ## Generate distribution packages
+test: $(VENV)/bin/activate ## Run unit tests
+	$(PYTHON) -m $(TEST)
+
+build-dist: $(VENV)/bin/activate ## Generate distribution packages
 	$(PYTHON) -m build
+
+build-docker: ## Build the docker image
+	@docker build -t boilerplate .
+
+build-docs: $(VENV)/bin/activate ## Generate documentation
+	@printf "Building documentation\n"
+	@mkdocs build -c -q
+	@open site/index.html
+
+preview-docs: $(VENV)/bin/activate ## Serve documentation
+	@mkdocs serve -w .
+
+publish: $(VENV)/bin/activate ## Publish to PyPI
+	$(MAKE) lint
+	$(MAKE) test
+	$(MAKE) build-dist
+	$(PYTHON) -m twine upload --repository pypi dist/*
+	$(MAKE) clean
+
+build: $(VENV)/bin/activate ## Build the project
+	$(MAKE) lint
+	$(MAKE) test
+	$(MAKE) build-dist
+	$(MAKE) build-docker
+	$(MAKE) build-docs
+
+start-api: ## Start the API
+	@docker compose up -d
+	@printf "API is running at http://localhost\n"
+
+stop-api: ## Stop the API
+	@docker compose down
