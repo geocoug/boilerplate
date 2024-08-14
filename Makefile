@@ -19,6 +19,7 @@ $(VENV)/bin/activate: requirements.txt
 init: ## Initialize the project environment (venv & pre-commit)
 	@$(MAKE) $(BIN)/activate
 	@$(MAKE) update
+	@$(MAKE) clean
 
 clean: ## Remove temporary files
 	@rm -rf .ipynb_checkpoints

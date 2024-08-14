@@ -4,9 +4,47 @@
 
 Generalized starter template for developing Python applications.
 
+## Getting Started
+
+To get started with this project, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/geocoug/boilerplate.git`
+2. Rename the project directory: `mv boilerplate <project-name>`
+3. Change to the project directory: `cd <project-name>`
+4. Initialize the project environment: `make init`
+5. Modify the project content as needed.
+
 ## Components
 
+### uv
+
+This project uses [uv](https://github.com/astral-sh/uv) to manage Python virtual environments. To install `uv`, follow these [getting started](https://github.com/astral-sh/uv?tab=readme-ov-file#getting-started) instructions.
+
+### Python
+
+This project requires Python 3.10 or higher. To install Python, follow the instructions on the [Python website](https://www.python.org/downloads/).
+
+The following Python packages are required for this project:
+
+- `mkdocs`
+- `mkdocs-material`
+- `mkdocstrings`
+- `mkdocstrings[python]`
+- `markdown-include`
+- `pytest`
+- `pytest-cov`
+- `bump-my-version`
+- `ruff`
+- `pre-commit`
+- `twine`
+
 ### Makefile
+
+This project uses a `Makefile` to manage commands. The `make` command is required to run the commands in the `Makefile`. To install `make`, follow the instructions for your operating system:
+
+- [Windows](http://gnuwin32.sourceforge.net/packages/make.htm)
+- **MacOS**: `brew install make`
+- [Linux](https://www.gnu.org/software/make/)
 
 The [`Makefile`](./Makefile) contains a set of commands to help with development. The following commands are available:
 
@@ -73,20 +111,4 @@ The project is containerized using [Docker](https://www.docker.com/). The[`Docke
 
 ### Publishing
 
-The project can be published to [PyPI](https://pypi.org/) using the [`twine`](https://twine.readthedocs.io/) package. To publish the package, run the command `make publish`.
-
-## Requirements
-
-The following Python packages are required for this project:
-
-- `mkdocs`
-- `mkdocs-material`
-- `mkdocstrings`
-- `mkdocstrings[python]`
-- `markdown-include`
-- `pytest`
-- `pytest-cov`
-- `bump-my-version`
-- `ruff`
-- `pre-commit`
-- `twine`
+The project can be published to [PyPI](https://pypi.org/) using the [`twine`](https://twine.readthedocs.io/) package. To publish the package, run the command `make publish`, or use the GitHub Actions workflow to automatically publish the package on every push to the `main` branch.
