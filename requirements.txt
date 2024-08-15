@@ -2,6 +2,7 @@ annotated-types==0.7.0
 anyio==4.4.0
 babel==2.15.0
 bracex==2.4
+build==1.2.1
 bump-my-version==0.24.3
 certifi==2024.7.4
 cfgv==3.4.0
@@ -59,6 +60,7 @@ pydantic-core==2.20.1
 pydantic-settings==2.4.0
 pygments==2.18.0
 pymdown-extensions==10.9
+pyproject-hooks==1.1.0
 pytest==8.3.2
 pytest-cov==5.0.0
 python-dateutil==2.9.0.post0
