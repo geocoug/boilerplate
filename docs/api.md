@@ -1,3 +1,3 @@
 # API
 
-::: boilerplate.api.hello
+::: boilerplate.api
