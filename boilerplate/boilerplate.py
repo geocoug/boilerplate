@@ -18,35 +18,37 @@ logger = logging.getLogger(__name__)
 
 
 class Boilerplate:
-    def __init__(self: Boilerplate, x: int, y: int) -> None:
+    def __init__(self: Boilerplate, x: float, y: float) -> None:
         """A simple class to perform basic arithmetic operations.
 
         Args:
-            x (int): The first number.
-            y (int): The second number.
+            x (float): The first number.
+            y (float): The second number.
         """
         self.x = x
         self.y = y
 
-    def add(self: Boilerplate) -> int:
+    def add(self: Boilerplate) -> float:
         """Add two numbers together."""
         return self.x + self.y
 
-    def subtract(self: Boilerplate) -> int:
+    def subtract(self: Boilerplate) -> float:
         """Subtract two numbers."""
         return self.x - self.y
 
-    def multiply(self: Boilerplate) -> int:
+    def multiply(self: Boilerplate) -> float:
         """Multiply two numbers."""
         return self.x * self.y
 
-    def divide(self: Boilerplate) -> float:
+    def divide(self: Boilerplate) -> float | str:
         """Divide two numbers."""
+        if self.y == 0:
+            return "Cannot divide by zero."
         return self.x / self.y
 
     def __repr__(self: Boilerplate) -> str:
         """Return the class representation."""
-        return f"Boilerplate({self.x}, {self.y})"
+        return f"Boilerplate(x={self.x}, y={self.y})"
 
 
 def clparser() -> argparse.Namespace:
@@ -66,8 +68,14 @@ def clparser() -> argparse.Namespace:
         action="store_true",
         help="enable debug mode.",
     )
-    parser.add_argument("x", type=int, help="The first number.")
-    parser.add_argument("y", type=int, help="The second number.")
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="enable verbose mode.",
+    )
+    parser.add_argument("x", type=float, help="The first number.")
+    parser.add_argument("y", type=float, help="The second number.")
     return parser.parse_args()
 
 
@@ -82,14 +90,15 @@ def cli() -> None:
         )
         for handler in logger.handlers:
             handler.setFormatter(formatter)
+    if args.verbose:
+        logger.addHandler(logging.StreamHandler(sys.stdout))
     try:
         boilerplate = Boilerplate(args.x, args.y)
+        logger.info(boilerplate)
         logger.info(f"Add: {boilerplate.add()}")
         logger.info(f"Subtract: {boilerplate.subtract()}")
         logger.info(f"Multiply: {boilerplate.multiply()}")
         logger.info(f"Divide: {boilerplate.divide()}")
-    except ZeroDivisionError:
-        logger.error("Cannot divide by zero.")
     except SystemExit as x:
         sys.exit(x.code)
     except ValueError:

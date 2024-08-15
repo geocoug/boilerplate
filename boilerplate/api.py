@@ -41,56 +41,56 @@ async def hello() -> str:
 
 
 @app.get("/add/{x}/{y}")
-async def add(x: int, y: int) -> int:
+async def add(x: float, y: float) -> float:
     """Add two numbers together.
 
     Args:
-        x (int): The first number.
-        y (int): The second number.
+        x (float): The first number.
+        y (float): The second number.
 
     Returns:
-        int: The sum of the two numbers.
+        float: The sum of the two numbers.
     """
     return Boilerplate(x, y).add()
 
 
 @app.get("/subtract/{x}/{y}")
-async def subtract(x: int, y: int) -> int:
+async def subtract(x: float, y: float) -> float:
     """Subtract two numbers.
 
     Args:
-        x (int): The first number.
-        y (int): The second number.
+        x (float): The first number.
+        y (float): The second number.
 
     Returns:
-        int: The difference of the two numbers.
+        float: The difference of the two numbers.
     """
     return Boilerplate(x, y).subtract()
 
 
 @app.get("/multiply/{x}/{y}")
-async def multiply(x: int, y: int) -> int:
+async def multiply(x: float, y: float) -> float:
     """Multiply two numbers.
 
     Args:
-        x (int): The first number.
-        y (int): The second number.
+        x (float): The first number.
+        y (float): The second number.
 
     Returns:
-        int: The product of the two numbers.
+        float: The product of the two numbers.
     """
     return Boilerplate(x, y).multiply()
 
 
 @app.get("/divide/{x}/{y}")
-async def divide(x: int, y: int) -> float:
+async def divide(x: float, y: float) -> float | str:
     """Divide two numbers.
 
     Args:
-        x (int): The first number.
-        y (int): The second number.
+        x (float): The first number.
+        y (float): The second number.
 
     Returns:
-        float: The quotient of the two numbers.
-    """
+        float | str: The quotient of the two numbers. If the second number is zero, return a string indicating that division by zero is not allowed.
+    """  # noqa: E501
     return Boilerplate(x, y).divide()
