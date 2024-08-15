@@ -11,7 +11,7 @@ help: ## show this help
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%s\033[0m|%s\n", $$1, $$2}' \
 	| column -t -s '|'
 
-$(VENV)/bin/activate: requirements.txt
+$(BIN)/activate: requirements.txt
 	uv venv
 	uv pip install -U pip
 	uv pip install -r requirements.txt
@@ -87,7 +87,7 @@ publish: $(VENV)/bin/activate ## Publish to PyPI
 	$(PYTHON) -m twine upload --repository pypi dist/*
 	$(MAKE) clean
 
-build: $(VENV)/bin/activate ## Build the project
+build: $(VENV)/bin/activate ## Build the project, docs, and docker image
 	$(MAKE) lint
 	$(MAKE) test
 	$(MAKE) build-dist
@@ -95,7 +95,7 @@ build: $(VENV)/bin/activate ## Build the project
 	$(MAKE) build-docs
 
 start-api: ## Start the API
-	@docker compose up -d
+	@docker compose up --build -d
 	@printf "API is running at http://localhost\n"
 
 stop-api: ## Stop the API
