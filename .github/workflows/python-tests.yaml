@@ -1,5 +1,5 @@
 ---
-name: "Python Tests"
+name: tests
 
 on:
   push:
