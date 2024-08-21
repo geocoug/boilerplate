@@ -6,9 +6,6 @@ on:
   pull_request:
   workflow_dispatch:
 
-env:
-  UV_SYSTEM_PYTHON: 1
-
 jobs:
   python-tests:
     name: ${{ matrix.os }}-python-${{ matrix.python-version }}
@@ -34,7 +31,10 @@ jobs:
         run: irm https://astral.sh/uv/install.ps1 | iex
         shell: powershell
       - name: Setup Python ${{ matrix.python-version }}
-        run: uv python install ${{ matrix.python-version }}
+        run: |
+          uv python install ${{ matrix.python-version }}
+          uv venv
+          source .venv/bin/activate
       - name: Install dependencies
         if: ${{ matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest' }}
         run: |
