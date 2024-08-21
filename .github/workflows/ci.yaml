@@ -6,6 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  UV_SYSTEM_PYTHON: 1
+
 jobs:
   python-tests:
     name: ${{ matrix.os }}-python-${{ matrix.python-version }}
