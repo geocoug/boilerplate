@@ -1,6 +1,6 @@
 # Boilerplate
 
-[![ci/cd](https://github.com/geocoug/boilerplate/actions/workflows/ci-cd.yaml/badge.svg)](https://github.com/geocoug/boilerplate/actions/workflows/ci-cd.yaml)
+[![ci](https://github.com/geocoug/boilerplate/actions/workflows/ci.yaml/badge.svg)](https://github.com/geocoug/boilerplate/actions/workflows/ci.yaml)
 
 Generalized starter template for developing Python applications.
 
