@@ -31,9 +31,9 @@ jobs:
         run: irm https://astral.sh/uv/install.ps1 | iex
         shell: powershell
       - name: Setup Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
         with:
           python-version: ${{ matrix.python-version }}
-        run: uv python install ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
           if [ -f requirements.txt ]; then uv pip install -r requirements.txt; fi
