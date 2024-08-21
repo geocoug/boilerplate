@@ -34,12 +34,18 @@ jobs:
         run: |
           uv python install ${{ matrix.python-version }}
           uv venv
-          source .venv/bin/activate
-      - name: Install dependencies
+      - name: Activate virtual environment for Linux and macOS
+        if: ${{ matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest' }}
+        run: source .venv/bin/activate
+      - name: Activate virtual environment for Windows
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: .venv\Scripts\Activate
+        shell: powershell
+      - name: Install dependencies for Linux and macOS
         if: ${{ matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest' }}
         run: |
           if [ -f requirements.txt ]; then uv pip install -r requirements.txt; fi
-      - name: Install dependencies
+      - name: Install dependencies for Windows
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
           if (Test-Path requirements.txt) { uv pip install -r requirements.txt }
