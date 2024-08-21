@@ -3,6 +3,7 @@ FROM python:3.12-slim
 ENV HOME=/app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV UV_SYSTEM_PYTHON=1
 
 WORKDIR $HOME
 
@@ -11,21 +12,18 @@ RUN apt-get update -y \
     && apt-get install --no-install-recommends -y wget \
     && rm -rf /var/lib/apt/lists/*
 
-ADD --chmod=755 https://astral.sh/uv/install.sh /install.sh
-
-RUN /install.sh \
-    && rm /install.sh
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
 COPY ./requirements.txt /tmp/requirements.txt
 
-RUN $HOME/.cargo/bin/uv pip install --system --no-cache -r /tmp/requirements.txt \
+RUN /bin/uv pip install --no-cache -r /tmp/requirements.txt \
     && rm -rf /tmp/requirements.txt
 
 COPY ./boilerplate $HOME/boilerplate
 
 COPY ./pyproject.toml $HOME
 
-RUN $HOME/.cargo/bin/uv pip install --system --no-cache $HOME
+RUN /bin/uv pip install --no-cache $HOME
 
 RUN addgroup --system app \
     && adduser --system --group app \
