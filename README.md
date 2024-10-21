@@ -1,8 +1,6 @@
 # Boilerplate
 
-[![python tests](https://github.com/geocoug/boilerplate/actions/workflows/python-tests.yaml/badge.svg)](https://github.com/geocoug/boilerplate/actions/workflows/python-tests.yaml)
-[![docker build](https://github.com/geocoug/boilerplate/actions/workflows/docker-build.yaml/badge.svg)](https://github.com/geocoug/boilerplate/actions/workflows/docker-build.yaml)
-[![pypi publish](https://github.com/geocoug/boilerplate/actions/workflows/pypi-publish.yaml/badge.svg)](https://github.com/geocoug/boilerplate/actions/workflows/pypi-publish.yaml)
+[![ci/cd](https://github.com/geocoug/boilerplate/actions/workflows/ci-cd.yaml/badge.svg)](https://github.com/geocoug/boilerplate/actions/workflows/ci-cd.yaml)
 
 Generalized starter template for developing Python applications.
 
